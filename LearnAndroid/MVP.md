@@ -17,6 +17,7 @@
 - Persenter中除去应用逻辑外还有大量的View-Modle Modle-View的手动同步逻辑不易于维护
 - 由于对视图控制渲染都放在Persenter中，所以View与Persenter交互频繁与视图过于紧密联系一旦View变动Persenter也要跟着变动
 - 额外的学习成本高
+
 ### MVP模式的4要素 ###
 - View :负责绘制UI元素、与用户进行交互(在Android中体现为Activity）
 - View interface :需要View实现的接口，View通过View interface与Presenter进行交互，降低耦合，方便进行单元测试
