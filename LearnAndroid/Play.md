@@ -13,7 +13,7 @@
 - 借助js调用js指定函数比如`javascript:webobj.getParams();`让web端处理封装好需要的支付参数后通过`WebView.addJavascriptInterface(mBridge, "obj")`调用协商好的javaBridge函数比如`public void callClient(String data)`函数`window:obj.callClient(json)`传递json结果到javabridge对象中。
 
 ##### 第二阶段调用SDK支付 #####
-- 通过json封装的参数得到调用的平台参数与支付参数比如`platform=data.getString("platform")`和` payParams = data.getString("payParams")`商品支付参数然后根据platform调用制定的平台支付传入支付参数调起支付得到支付结果。
+- 通过json封装的参数得到调用的平台参数与支付参数比如`platform=data.getString("platform")`和` payParams = data.getString("payParams")`商品支付参数然后根据platform调用指定的平台支付传入支付参数调起支付得到支付结果。
 
 ##### 第三阶段上传支付结果 #####
 - 把支付结果和支付平台信息等需要的参数上传到服务器中返回最终结果
