@@ -346,6 +346,24 @@ private TouchTarget addTouchTarget(View child, int pointerIdBits) {
 
 ｝
 ```
+##### Activity事件派发过程 #####
+
+- **Activity dispatchTouchEvent** 
+
+```
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            onUserInteraction();
+        }
+        if (getWindow().superDispatchTouchEvent(ev)) {//调用Window的派发得到返回结果如果为true则派发完成否则调用自己onTouchEvent消费事件
+            return true;
+        }
+        return onTouchEvent(ev);
+    }
+```
+首先是事件交给Activity所附属的Window进行派发返回true，事件结束反之调用自己的onTouchEvent处理。派发给window过程中是通过window的实现类PhoneWindow来superDispatchTouchEvent处理它是通过mDecor来调用superDispatchTouchEvent而mDecor是DecorView是集成了FrameLayout的一个viewGroup然后在传到我们setContentView的ViewGroup中的。
+
+
 ##### 总结 #####
 
 
