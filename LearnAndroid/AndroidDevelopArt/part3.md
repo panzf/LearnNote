@@ -361,7 +361,7 @@ private TouchTarget addTouchTarget(View child, int pointerIdBits) {
         return onTouchEvent(ev);
     }
 ```
-首先是事件交给Activity所附属的Window进行派发返回true，事件结束反之调用自己的onTouchEvent处理。派发给window过程中是通过window的实现类PhoneWindow来superDispatchTouchEvent处理它是通过mDecor来调用superDispatchTouchEvent而mDecor是DecorView是集成了FrameLayout的一个viewGroup然后在传到我们setContentView的ViewGroup中的。
+首先是事件交给Activity所附属的Window进行派发返回true，事件结束反之调用自己的onTouchEvent处理。派发给window过程中是通过window的实现类PhoneWindow来superDispatchTouchEvent处理它是通过mDecor来调用superDispatchTouchEvent而mDecor是DecorView是继承了FrameLayout的一个viewGroup然后在传到我们setContentView的ViewGroup中的。
 
 
 ##### 总结 #####
@@ -375,13 +375,15 @@ private TouchTarget addTouchTarget(View child, int pointerIdBits) {
 
 ##### 常见的滑动冲突场景 #####
 
--  外部滑动方向与内部滑动方向不一致，比如ViewPager中包含ListView
+- 外部滑动方向与内部滑动方向不一致，比如ViewPager中包含ListView
 - 外部滑动方向与内部滑动方向一致
 - 上面两种情况的嵌套
 
 ##### 滑动冲突的处理规则 #####
 
-可以根据滑动距离和水平方向形成的夹角；或者根据水平和竖直方向滑动的距离差；或者两个方向上的速度差等。
+1. 根据滑动距离和水平方向形成的夹角。
+2. 根据水平和竖直方向滑动的距离差。
+3. 根据两个方向上的速度差等。
 
 ##### 滑动冲突的解决方式 #####
 - 外部拦截法
