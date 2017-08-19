@@ -131,9 +131,10 @@ View的滑动可以通过三种方式实现
 ### View事件分发的机制 ###
 
 事件分发机制的三个重要方法
-    - public boolean dispatchTouchEvent(MotionEvent ev)
-    - public boolean onInterceptTouchEvent(MotionEvent event)
-    - public boolean onTouchEvent(MotionEvent event)
+   
+   - public boolean dispatchTouchEvent(MotionEvent ev)
+   - public boolean onInterceptTouchEvent(MotionEvent event)
+   - public boolean onTouchEvent(MotionEvent event)
     
 dispatchTouchEvent：用来进行事件的分发。如果事件能够传递给当前的View，那么此方法一定会被调用，返回结果受当前View的onTouchEvent和下级View的dispatchTouchEvent方法的影响，表示是否消耗当前事件。
 
