@@ -172,99 +172,99 @@ Android 应用进程通信细分为：Bundle,文件共享，AIDL,Messenger,Conte
     **注意:** 通过Message传递对象也就是 message 中的object来当载体传递对象数据的在那2.2版本前是不支持的2.2后添加支持也要实现了序列化的对象才能传递也就是实现了Parcelable接口,导致object实用性大减不过我们可以借助Bundle来传递`message.setData(bundle)`。
   - client   
 
-```    
-    public class MainActivity extends Activity {
-
-	private ServiceConnection conn = new ServiceConnection() {
-
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-		
-        }
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			Messenger mService = new Messenger(service);
-			Message msg = Message.obtain();
-			Bundle data = new Bundle();
-			msg.what = 100;
-			data.putString("KEY", "this msg from client");
-			msg.setData(data);
-			msg.replyTo = mClientMessenger;
-			try {
-				mService.send(msg);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-		}
-	};
-
-	private static class ClientHandler extends Handler {
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case 200:
-				Log.i("TAG", "msg:" + msg.getData().getString("KEY"));
-				break;
-
-			default:
-				super.handleMessage(msg);
-				break;
-			}
-			super.handleMessage(msg);
-		}
-	}
-
-	private Messenger mClientMessenger = new Messenger(new ClientHandler());
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		Intent service = new Intent(this, MessengerService.class);
-		bindService(service, conn, BIND_AUTO_CREATE);
-	}
- }
-```
-
- - service
+    ```    
+        public class MainActivity extends Activity {
     
-```   
-    public class MessengerService extends Service {
-
-	private static class ServiceHandler extends Handler {
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case 100:
-				Log.i("TAG", "msg:" + msg.getData().getString("KEY"));
-				Message message = Message.obtain();
-				Bundle clientData = new Bundle();
-				message.what = 200;
-				clientData.putString("KEY", "this msg from Service");
-				message.setData(clientData);
-				try {
-					msg.replyTo.send(message);
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-				break;
-			default:
-				super.handleMessage(msg);
-				break;
-			}
-		}
-	}
-
-    	private final Messenger messenger = new Messenger(new ServiceHandler());
+    	private ServiceConnection conn = new ServiceConnection() {
+    
+    		@Override
+    		public void onServiceDisconnected(ComponentName name) {
+    		
+            }
+    		@Override
+    		public void onServiceConnected(ComponentName name, IBinder service) {
+    			Messenger mService = new Messenger(service);
+    			Message msg = Message.obtain();
+    			Bundle data = new Bundle();
+    			msg.what = 100;
+    			data.putString("KEY", "this msg from client");
+    			msg.setData(data);
+    			msg.replyTo = mClientMessenger;
+    			try {
+    				mService.send(msg);
+    			} catch (RemoteException e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	};
+    
+    	private static class ClientHandler extends Handler {
+    		@Override
+    		public void handleMessage(Message msg) {
+    			switch (msg.what) {
+    			case 200:
+    				Log.i("TAG", "msg:" + msg.getData().getString("KEY"));
+    				break;
+    
+    			default:
+    				super.handleMessage(msg);
+    				break;
+    			}
+    			super.handleMessage(msg);
+    		}
+    	}
+    
+    	private Messenger mClientMessenger = new Messenger(new ClientHandler());
     
     	@Override
-    	public IBinder onBind(Intent intent) {
-    		return messenger.getBinder();
-    	}}
-```
+    	protected void onCreate(Bundle savedInstanceState) {
+    		super.onCreate(savedInstanceState);
+    		setContentView(R.layout.activity_main);
+    		Intent service = new Intent(this, MessengerService.class);
+    		bindService(service, conn, BIND_AUTO_CREATE);
+    	}
+     }
+    ```
 
-- 工作流程 
+  - service
+    
+    ```   
+        public class MessengerService extends Service {
+    
+    	private static class ServiceHandler extends Handler {
+    		@Override
+    		public void handleMessage(Message msg) {
+    			switch (msg.what) {
+    			case 100:
+    				Log.i("TAG", "msg:" + msg.getData().getString("KEY"));
+    				Message message = Message.obtain();
+    				Bundle clientData = new Bundle();
+    				message.what = 200;
+    				clientData.putString("KEY", "this msg from Service");
+    				message.setData(clientData);
+    				try {
+    					msg.replyTo.send(message);
+    				} catch (RemoteException e) {
+    					e.printStackTrace();
+    				}
+    				break;
+    			default:
+    				super.handleMessage(msg);
+    				break;
+    			}
+    		}
+    	}
+    
+        	private final Messenger messenger = new Messenger(new ServiceHandler());
+        
+        	@Override
+        	public IBinder onBind(Intent intent) {
+        		return messenger.getBinder();
+        	}
+    }
+    ```
 
+ - 工作流程 
 ![](http://i.imgur.com/OVxtSpL.jpg) 
 
 
