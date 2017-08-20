@@ -223,7 +223,7 @@ Android 应用进程通信细分为：Bundle,文件共享，AIDL,Messenger,Conte
 		bindService(service, conn, BIND_AUTO_CREATE);
 	}
  }
-   ```
+ ```
 
  - service
     
@@ -262,9 +262,10 @@ Android 应用进程通信细分为：Bundle,文件共享，AIDL,Messenger,Conte
     	}
 }
    ```
- 
-  - 工作流程
- ![](http://i.imgur.com/OVxtSpL.jpg) 
+
+ - 工作流程 
+
+![](http://i.imgur.com/OVxtSpL.jpg) 
 
 
     
