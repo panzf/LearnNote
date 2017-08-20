@@ -171,7 +171,8 @@ Android 应用进程通信细分为：Bundle,文件共享，AIDL,Messenger,Conte
     ```
     **注意:** 通过Message传递对象也就是 message 中的object来当载体传递对象数据的在那2.2版本前是不支持的2.2后添加支持也要实现了序列化的对象才能传递也就是实现了Parcelable接口,导致object实用性大减不过我们可以借助Bundle来传递`message.setData(bundle)`。
   - client   
-  ```    
+
+```    
     public class MainActivity extends Activity {
 
 	private ServiceConnection conn = new ServiceConnection() {
@@ -223,11 +224,11 @@ Android 应用进程通信细分为：Bundle,文件共享，AIDL,Messenger,Conte
 		bindService(service, conn, BIND_AUTO_CREATE);
 	}
  }
- ```
+```
 
  - service
     
-   ```   
+```   
     public class MessengerService extends Service {
 
 	private static class ServiceHandler extends Handler {
@@ -259,11 +260,10 @@ Android 应用进程通信细分为：Bundle,文件共享，AIDL,Messenger,Conte
     	@Override
     	public IBinder onBind(Intent intent) {
     		return messenger.getBinder();
-    	}
-}
-   ```
+    	}}
+```
 
- - 工作流程 
+- 工作流程 
 
 ![](http://i.imgur.com/OVxtSpL.jpg) 
 
