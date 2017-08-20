@@ -10,8 +10,8 @@
 - [插件化与组件化](https://github.com/panzf/LearnNote/blob/master/LearnAndroid/ComponentAndPlugin.md)
 
 ### Android开发艺术 ### 
-- [第一章 《Activity生命周期与启动模式》]()
-- [第二章 《IPC机制》]()
+- [第一章 《Activity生命周期与启动模式》](https://github.com/panzf/LearnNote/blob/master/LearnAndroid/AndroidDevelopArt/part1.md)
+- [第二章 《IPC机制》](https://github.com/panzf/LearnNote/blob/master/LearnAndroid/AndroidDevelopArt/part2.md)
 - [第三章 《View事件体系》](https://github.com/panzf/LearnNote/blob/master/LearnAndroid/AndroidDevelopArt/part3.md)
 
 ## Network篇 ##
